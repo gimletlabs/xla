@@ -198,7 +198,7 @@ bool ContainersEqual(const Container1T& c1,
 }
 
 #if defined(__cpp_lib_to_underlying) && __cpp_lib_to_underlying >= 202102L
-using to_underlying = std::to_underlying;
+using std::to_underlying;
 #else
 // Helper function which implements C++23's std::to_underlying.
 template <typename T>
