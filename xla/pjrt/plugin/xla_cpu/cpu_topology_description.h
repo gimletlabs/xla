@@ -48,9 +48,10 @@ class CpuTopologyDescription : public PjRtTopologyDescription {
   explicit CpuTopologyDescription(const CpuTopology& cpu_topology);
 
   CpuTopologyDescription(const CpuTopologyDescription&) = default;
-  CpuTopologyDescription& operator=(const CpuTopologyDescription&) = default;
   CpuTopologyDescription(CpuTopologyDescription&&) = default;
-  CpuTopologyDescription& operator=(CpuTopologyDescription&&) = default;
+  // Assignment is unavailable because platform_id_ is const.
+  CpuTopologyDescription& operator=(const CpuTopologyDescription&) = delete;
+  CpuTopologyDescription& operator=(CpuTopologyDescription&&) = delete;
 
   bool operator==(const CpuTopologyDescription& other) const {
     return this->platform_id() == other.platform_id() &&
