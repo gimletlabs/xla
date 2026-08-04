@@ -150,6 +150,18 @@ Layout::Layout(absl::Span<const int64_t> minor_to_major,
                int64_t tail_padding_alignment_in_elements,
                int64_t element_size_in_bits, int64_t memory_space,
                absl::Span<const SplitConfig> split_configs,
+               int64_t dynamic_shape_metadata_prefix_bytes)
+    : Layout(minor_to_major, tiles, index_primitive_type,
+             element_primitive_type, tail_padding_alignment_in_elements,
+             element_size_in_bits, memory_space, split_configs, nullptr,
+             dynamic_shape_metadata_prefix_bytes) {}
+
+Layout::Layout(absl::Span<const int64_t> minor_to_major,
+               absl::Span<const Tile> tiles, PrimitiveType index_primitive_type,
+               PrimitiveType element_primitive_type,
+               int64_t tail_padding_alignment_in_elements,
+               int64_t element_size_in_bits, int64_t memory_space,
+               absl::Span<const SplitConfig> split_configs,
                std::unique_ptr<Shape> physical_shape,
                int64_t dynamic_shape_metadata_prefix_bytes)
     : index_primitive_type_(index_primitive_type),

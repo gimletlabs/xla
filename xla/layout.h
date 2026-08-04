@@ -200,8 +200,15 @@ class Layout {
                   int64_t tail_padding_alignment_in_elements = 1,
                   int64_t element_size_in_bits = 0, int64_t memory_space = 0,
                   absl::Span<const SplitConfig> split_configs = {},
-                  std::unique_ptr<Shape> physical_shape = nullptr,
                   int64_t dynamic_shape_metadata_prefix_bytes = 0);
+  Layout(absl::Span<const int64_t> minor_to_major,
+         absl::Span<const Tile> tiles, PrimitiveType index_primitive_type,
+         PrimitiveType element_primitive_type,
+         int64_t tail_padding_alignment_in_elements,
+         int64_t element_size_in_bits, int64_t memory_space,
+         absl::Span<const SplitConfig> split_configs,
+         std::unique_ptr<Shape> physical_shape,
+         int64_t dynamic_shape_metadata_prefix_bytes = 0);
 
   Layout& operator=(const Layout& other);
   Layout& operator=(Layout&& other);
