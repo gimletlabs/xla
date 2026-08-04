@@ -1364,11 +1364,8 @@ class PjRtBuffer {
 // when passed to the execution.
 class PjRtLoadedExecutable {
  public:
-  PjRtLoadedExecutable() {
-    executable_forwarder_ = std::make_unique<PjRtExecutableForwarder>(this);
-  }
-
-  virtual ~PjRtLoadedExecutable() = default;
+  PjRtLoadedExecutable();
+  virtual ~PjRtLoadedExecutable();
 
   virtual PjRtClient* client() const = 0;
 
