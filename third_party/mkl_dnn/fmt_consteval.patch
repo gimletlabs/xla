@@ -1,0 +1,20 @@
+diff --git a/src/common/spdlog/fmt/bundled/base.h b/src/common/spdlog/fmt/bundled/base.h
+index 2bb67d293..d49636d1d 100644
+--- a/src/common/spdlog/fmt/bundled/base.h
++++ b/src/common/spdlog/fmt/bundled/base.h
+@@ -110,6 +110,7 @@
+ #  define FMT_CONSTEXPR
+ #endif
+ 
++#if !defined(FMT_USE_CONSTEVAL)
+ // Detect consteval, C++20 constexpr extensions and std::is_constant_evaluated.
+ #if !defined(__cpp_lib_is_constant_evaluated)
+ #  define FMT_USE_CONSTEVAL 0
+@@ -130,6 +131,7 @@
+ #else
+ #  define FMT_USE_CONSTEVAL 0
+ #endif
++#endif
+ #if FMT_USE_CONSTEVAL
+ #  define FMT_CONSTEVAL consteval
+ #  define FMT_CONSTEXPR20 constexpr

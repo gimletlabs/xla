@@ -214,6 +214,7 @@ cc_library(
         ],
     ),
     copts = _COPTS_LIST,
+    defines = ["FMT_USE_CONSTEVAL=0"],
     includes = _INCLUDES_LIST,
     # TODO(penpornk): Use lrt_if_needed from tensorflow.bzl instead.
     linkopts = select({
