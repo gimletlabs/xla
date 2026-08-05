@@ -105,6 +105,12 @@ PjRtHostMemoryForDeviceManager::~PjRtHostMemoryForDeviceManager() = default;
 
 CopyToDeviceStream::~CopyToDeviceStream() = default;
 
+PjRtLoadedExecutable::PjRtLoadedExecutable()
+    : executable_forwarder_(
+          std::make_unique<PjRtExecutableForwarder>(this)) {}
+
+PjRtLoadedExecutable::~PjRtLoadedExecutable() = default;
+
 absl::StatusOr<absl::flat_hash_map<std::string, PjRtValueType>>
 PjRtLoadedExecutable::GetCostAnalysis() const {
   TF_ASSIGN_OR_RETURN(std::unique_ptr<HloCostAnalysis> hlo_cost_analysis,
