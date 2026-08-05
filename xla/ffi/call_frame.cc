@@ -123,11 +123,6 @@ void CallFrameBuilder::AddAttributes(AttributesMap attrs) {
   }
 }
 
-CallFrame CallFrameBuilder::Build() {
-  return CallFrame(CallFrame::CreateArgs(args_), CallFrame::CreateRets(rets_),
-                   CallFrame::CreateAttrs(attrs_));
-}
-
 CallFrameBuilder::CallFrameBuilder(CallFrameBuilder&&) = default;
 CallFrameBuilder& CallFrameBuilder::operator=(CallFrameBuilder&&) = default;
 
@@ -215,6 +210,11 @@ struct CallFrame::Attributes {
 //===----------------------------------------------------------------------===//
 // CallFrame
 //===----------------------------------------------------------------------===//
+
+CallFrame CallFrameBuilder::Build() {
+  return CallFrame(CallFrame::CreateArgs(args_), CallFrame::CreateRets(rets_),
+                   CallFrame::CreateAttrs(attrs_));
+}
 
 CallFrame::CallFrame(CallFrame&&) = default;
 CallFrame& CallFrame::operator=(CallFrame&&) = default;
