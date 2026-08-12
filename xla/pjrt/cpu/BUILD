@@ -323,7 +323,7 @@ cc_library(
     name = "cpu_pjrt_compiler",
     srcs = ["cpu_pjrt_compiler.cc"],
     hdrs = ["cpu_pjrt_compiler.h"],
-    visibility = internal_visibility(["//xla/pjrt/cpu:legacy_cpu_client_users"]),
+    visibility = ["//visibility:public"],
     deps = [
         "//xla/backends/cpu/collectives:cpu_collectives",
         "//xla/core/collectives:clique_id",
