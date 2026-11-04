@@ -202,7 +202,7 @@ class TileAssignment {
   typename std::enable_if_t<array_impl::pack_is_integral<Dims...>::value,
                             int64_t>
   operator()(Dims... dims) const {
-    DCHECK_EQ(sizeof...(dims), num_dimensions());
+    DCHECK_EQ(static_cast<int64_t>(sizeof...(dims)), num_dimensions());
     std::array<int64_t, sizeof...(dims)> indexes{
         {static_cast<int64_t>(dims)...}};
     return operator()(indexes);

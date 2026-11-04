@@ -2044,11 +2044,12 @@ TF_ATTRIBUTE_NOINLINE void MutableLiteralBase::PopulateR1(
   CHECK(shape().IsArray()) << __func__
                            << " is only supported for dense arrays: "
                            << shape();
-  CHECK_EQ(shape().dimensions().size(), 1);
+  CHECK_EQ(shape().dimensions_size(), 1);
   if (shape().is_static()) {
-    CHECK_EQ(ShapeUtil::ElementsIn(shape()), values.size());
+    CHECK_EQ(ShapeUtil::ElementsIn(shape()),
+             static_cast<int64_t>(values.size()));
   } else {
-    CHECK_EQ(GetDynamicSize(0), values.size());
+    CHECK_EQ(GetDynamicSize(0), static_cast<int64_t>(values.size()));
   }
   CHECK_EQ(shape().element_type(),
            primitive_util::NativeToPrimitiveType<NativeT>());
@@ -2062,7 +2063,7 @@ TF_ATTRIBUTE_NOINLINE void MutableLiteralBase::PopulateR2(
   CHECK(shape().IsArray()) << __func__
                            << " is only supported for dense arrays: "
                            << shape();
-  CHECK_EQ(shape().dimensions().size(), 2);
+  CHECK_EQ(shape().dimensions_size(), 2);
   CHECK_EQ(shape().element_type(),
            primitive_util::NativeToPrimitiveType<NativeT>());
 
@@ -2099,7 +2100,7 @@ TF_ATTRIBUTE_NOINLINE void MutableLiteralBase::PopulateFromArray(
   CHECK(shape().IsArray());
   CHECK_EQ(shape().element_type(),
            primitive_util::NativeToPrimitiveType<NativeT>());
-  CHECK_EQ(shape().dimensions().size(), values.num_dimensions());
+  CHECK_EQ(shape().dimensions_size(), values.num_dimensions());
   for (int dim = 0; dim < values.num_dimensions(); ++dim) {
     int64_t shape_size = shape().is_dynamic_dimension(dim)
                              ? GetDynamicSize(dim)

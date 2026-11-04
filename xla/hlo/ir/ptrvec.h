@@ -425,8 +425,8 @@ inline void PtrVec<T>::resize(size_t new_len, T value) {
       // size() must be <= 1 since !is_big()
       // and we know that new_len != 0 && new_len <= size.
       // So both new_new and size must be 1.
-      DCHECK_EQ(new_len, 1);
-      DCHECK_EQ(size(), 1);
+      DCHECK_EQ(new_len, size_t{1});
+      DCHECK_EQ(size(), size_t{1});
       // Nothing to do.
     }
   } else if (!is_big() && new_len == 1) {

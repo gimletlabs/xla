@@ -16,8 +16,6 @@ limitations under the License.
 #ifndef XLA_SERVICE_HLO_VALUE_H_
 #define XLA_SERVICE_HLO_VALUE_H_
 
-#include <stddef.h>
-
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -30,6 +28,7 @@ limitations under the License.
 #include "absl/container/inlined_vector.h"
 #include "absl/log/check.h"
 #include "absl/types/span.h"
+#include <stddef.h>
 #include "xla/hlo/ir/hlo_instruction.h"
 #include "xla/lazy.h"
 #include "xla/service/buffer_value.h"
@@ -238,7 +237,7 @@ class HloValueSet {
   // Return the unique HLO value in the set. CHECKs if the set does not contain
   // exactly one value.
   const HloValue& GetUniqueValue() const {
-    CHECK_EQ(values_.size(), 1);
+    CHECK_EQ(values_.size(), size_t{1});
     return *values_[0];
   }
 
