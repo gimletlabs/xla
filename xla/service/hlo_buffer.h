@@ -16,6 +16,7 @@ limitations under the License.
 #ifndef XLA_SERVICE_HLO_BUFFER_H_
 #define XLA_SERVICE_HLO_BUFFER_H_
 
+#include <cstddef>
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -113,7 +114,7 @@ class HloBuffer {
   // Return the unique HLO value in the buffer. CHECK fails if the buffer does
   // not contain exactly one value.
   const HloValue& GetUniqueValue() const {
-    CHECK_EQ(values_.size(), 1);
+    CHECK_EQ(values_.size(), size_t{1});
     return *values_[0];
   }
 

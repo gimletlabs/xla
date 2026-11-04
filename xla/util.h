@@ -181,7 +181,7 @@ absl::Span<const uint8_t> CastToByteSlice(absl::Span<const T> slice) {
 // length is a multiple of sizeof(T).
 template <typename T>
 absl::Span<const T> CastByteSlice(absl::Span<const uint8_t> slice) {
-  CHECK_EQ(0, slice.size() % sizeof(T));
+  CHECK_EQ(size_t{0}, slice.size() % sizeof(T));
   return absl::Span<const T>(tsl::safe_reinterpret_cast<const T*>(slice.data()),
                              slice.size() / sizeof(T));
 }
@@ -735,7 +735,7 @@ T NanWithSignAndPayload(bool sign, uint64_t nan_payload) {
   if (kPayloadBits > 0) {
     // Clear rep's NaN payload.
     rep &= ~NanPayloadBitMask<T>();
-    CHECK_NE(nan_payload, 0);
+    CHECK_NE(nan_payload, uint64_t{0});
     rep |= nan_payload;
   }
   return absl::bit_cast<T>(rep);

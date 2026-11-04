@@ -902,7 +902,7 @@ inline AsyncValue* AsyncValue::AddRef(uint32_t count) {
     return this;
   }
 
-  DCHECK_GT(refcount_.load(std::memory_order_relaxed), 0);
+  DCHECK_GT(refcount_.load(std::memory_order_relaxed), uint32_t{0});
   // Increasing the reference counter can always be done with
   // memory_order_relaxed: New references to an object can only be formed from
   // an existing reference, and passing an existing reference from one thread
@@ -927,7 +927,7 @@ inline void AsyncValue::DropRef(uint32_t count) {
     return;
   }
 
-  DCHECK_GT(refcount_.load(std::memory_order_relaxed), 0);
+  DCHECK_GT(refcount_.load(std::memory_order_relaxed), uint32_t{0});
   // We expect that `count` argument will often equal the actual reference count
   // here; optimize for that. If `count` == reference count, only an acquire
   // barrier is needed to prevent the effects of the deletion from leaking

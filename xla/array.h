@@ -107,7 +107,7 @@ class Array {
   // every cell with values from the list of flattened_values.
   Array(absl::Span<const int64_t> sizes, absl::Span<const T> flattened_values)
       : Array(sizes, no_default_init_t{}) {
-    CHECK_EQ(flattened_values.size(), num_elements());
+    CHECK_EQ(static_cast<int64_t>(flattened_values.size()), num_elements());
     std::copy(flattened_values.begin(), flattened_values.end(), begin());
   }
 
@@ -391,7 +391,7 @@ class Array {
   typename std::enable_if<array_impl::pack_is_integral<Dims...>::value,
                           const T&>::type
   operator()(Dims... dims) const {
-    DCHECK_EQ(sizeof...(dims), num_dimensions());
+    DCHECK_EQ(static_cast<int64_t>(sizeof...(dims)), num_dimensions());
     // Check each index is within the bounds of the array.
     int64_t i = 0;
     ([&] { DCHECK_LT(dims, sizes_[i++]); }(), ...);
@@ -415,7 +415,7 @@ class Array {
   // Returns the value at the cell specified by the indexes. The number of
   // arguments have to match with the number of dimensions for the array.
   const T& operator()(absl::Span<const int64_t> indexes) const {
-    CHECK_EQ(indexes.size(), num_dimensions());
+    CHECK_EQ(static_cast<int64_t>(indexes.size()), num_dimensions());
     return values_[calculate_index(indexes)];
   }
 
@@ -436,7 +436,8 @@ class Array {
 
   // Returns the size of the dimension at the given index.
   int64_t dim(int64_t n) const {
-    DCHECK_LT(n, sizes_.size);
+    DCHECK_GE(n, 0);
+    DCHECK_LT(n, num_dimensions());
     return sizes_[n];
   }
 
@@ -478,8 +479,8 @@ class Array {
   Array<T> Slice(absl::Span<const int64_t> starts,
                  absl::Span<const int64_t> limits,
                  std::optional<T> out_of_bounds_value = std::nullopt) const {
-    CHECK_EQ(starts.size(), num_dimensions());
-    CHECK_EQ(limits.size(), num_dimensions());
+    CHECK_EQ(static_cast<int64_t>(starts.size()), num_dimensions());
+    CHECK_EQ(static_cast<int64_t>(limits.size()), num_dimensions());
 
     OwnedBuffer<int64_t> sizes(starts.size());
     for (int64_t i = 0; i < starts.size(); ++i) {
@@ -804,7 +805,7 @@ class Array {
       }
       size_t dim_index_plus_1;
       for (dim_index_plus_1 = num_dims;; --dim_index_plus_1) {
-        DCHECK_GE(dim_index_plus_1, 1);
+        DCHECK_GE(dim_index_plus_1, size_t{1});
         size_t dim_index = dim_index_plus_1 - 1;
         size_t new_index = src_indexes[dim_index] + 1;
         if (new_index < dim(dim_index)) {
@@ -815,7 +816,7 @@ class Array {
           break;
         }
       }
-      DCHECK_GE(dim_index_plus_1, 1);
+      DCHECK_GE(dim_index_plus_1, size_t{1});
       for (size_t dim_index = dim_index_plus_1; dim_index < num_dims;
            ++dim_index) {
         src_indexes[dim_index] = 0;
